@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crud Api Practice Fake Ppl Data</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+    <div class="header-container">
+        <br>
+        <h1>Fake Data API</h1><br>
+        <p>This app generates fake data and lets you store or remove it from a database</p>
+    </div>
+    </header>
+    <br>
+    <main>
+        <br>
+        <div class="generate-button">
+            <button type="button" class="button" id="generate-button">Generate New User</button>
+        </div>
+        <br>
+        <div class="data-container">
+            <div class="data-wrapper">
+                <div class="img-container">
+                    <img class='myimg' alt='avatar' src='<%= avatar %>'/>
+                </div>
+            <div class="db-buttons-container">
+                <button type="button"class="button" id="save-button">Save User to DB</button>
+                <button type="button" class="button" id="delete-button">Delete User from DB</button>
+            </div>
+            <div class="params-container">
+                <div class="param-box">
+                    <div class="param-container">
+                        <div class='span-container' id="param-first-name"><span>First Name:</span></div>
+                        <div class='span-container-value' id="first-name-value"><span><%= firstName %></span></div>
+                    </div>
+                </div>
+                <div class="param-box">
+                    <div class="param-container">
+                        <div class='span-container' id="param-race"><span>Race:</span></div>
+                        <div class='span-container-value' id="race-value"><span><%= race %></span></div>
+                    </div>
+                </div>
+                <div class="param-box">
+                    <div class="param-container">
+                        <div class='span-container' id="param-language"><span>Language:</span></div>
+                        <div class='span-container-value' id="language-value"><span><%= language %></span></div>
+                    </div>
+                </div>
+                <div class="param-box">
+                    <div class="param-container">
+                        <div class='span-container' id="param-gender"><span>Gender:</span></div>
+                        <div class='span-container-value' id="gender-value"><span><%= gender %></span></div>
+                    </div>
+                </div>
+                <div class="param-box">
+                    <div class="param-container" id="param-work">
+                        <div class='span-container' id="param-work"><span>Work:</span></div>
+                        <div class='span-container-value' id="work-value"><span><%= work_department %></span></div>
+                    </div>
+                </div>
+                <div class="param-box">
+                    <div class="param-container" >
+                        <div class='span-container' id="param-buzzword"><span>Buzzword:</span></div>
+                        <div class='span-container-value' id="buzzword-value"><span><%= buzzword %></span></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <br>
+        <!--
+            <div class="operation-log-container">
+
+        </div>
+        -->
+        
+        <div class="operation-container">
+            <div class="log-container">
+                <div class="log-wrapper">
+                    <h4>Operation Log</h4>
+                    <span><%= operation %></span>
+                </div>
+            </div>
+            <div class="userlist-container">
+                <h4>List of saved users</h4>
+                <div class="list-container">
+                    <ul class="saved-users">
+                      <% for(let i = 0; i < usersInfo.length; i++){%>
+                        <li>
+                            <span>#<%= [i + 1]%></span>
+                            <span><%= usersInfo[i].firstName %></span>
+                        </li>
+                      <% } %>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
