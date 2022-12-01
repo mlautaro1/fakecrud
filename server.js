@@ -4,7 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const PORT = process.env.PORT || 8000;
 require('dotenv').config();
 
-let db,
+let db, collection,
     dbConnectionStr = process.env.DB_STRING, 
     dbName = 'fakePplDB',
     collectionName = 'fakePplCollection';
