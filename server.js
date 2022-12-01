@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
-const PORT = process.env.PORT || 8000;
+const PORT = 8000;
 require('dotenv').config();
 
 let db,
@@ -12,6 +12,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
+        const collection = db.collection('fakePplCollection')
 })
 
 app.set('view engine', 'ejs');
