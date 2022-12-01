@@ -6,13 +6,14 @@ require('dotenv').config();
 
 let db,
     dbConnectionStr = process.env.DB_STRING, 
-    dbName = 'fakePplDB';
+    dbName = 'fakePplDB',
+    collectionName = 'fakePplCollection';
 
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`)
         db = client.db(dbName)
-        const collection = db.collection('fakePplCollection')
+        collection = db.collection(collectionName)
 })
 
 app.set('view engine', 'ejs');
@@ -33,7 +34,7 @@ let userParams = {
 let operation = '';
 
 app.get('/',(req, res) => {
-    db.collection('fakePplCollection').find().toArray()
+    collection.find().toArray()
     .then(data => {
         res.render('index', {
             avatar: userParams.avatar,
@@ -83,7 +84,7 @@ app.post('/addUserToDB', (req, res) => {
     let isValid = validateObj(req.body.response);
     if (isValid) {
         console.log(`Added ${req.body.response.firstName} to DB.`);
-        db.collection('fakePplCollection').insertOne(req.body.response);
+        collection.insertOne(req.body.response);
         operation = `Added ${req.body.response.firstName} to DB.`;
         res.status(200).json(`Added ${req.body.response.firstName} to DB.`);
     } else {
@@ -107,7 +108,7 @@ app.put('/getNewUser', (req, res) => {
 app.delete('/deleteUserData', (req, res) => {
     let isValid = validateObj(userParams);
     if (isValid) {
-        db.collection('fakePplCollection').deleteOne({firstName: userParams.firstName})
+        collection.deleteOne({firstName: userParams.firstName})
         .then(result => {
         console.log('User Deleted')
         operation = `Deleted ${userParams.firstName} from DB.`;
