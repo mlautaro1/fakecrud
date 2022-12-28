@@ -25,7 +25,8 @@
         <div class="data-container">
             <div class="data-wrapper">
                 <div class="img-container">
-                    <img class='myimg' alt='avatar' src='<%= avatar %>'/>
+                    <!-- avatar variable missing -->
+                    <img class='myimg' alt='avatar' src=''/>
                 </div>
             <div class="db-buttons-container">
                 <button type="button"class="button" id="save-button">Save User to DB</button>
@@ -35,68 +36,85 @@
                 <div class="param-box">
                     <div class="param-container">
                         <div class='span-container' id="param-first-name"><span>First Name:</span></div>
-                        <div class='span-container-value' id="first-name-value"><span><%= firstName %></span></div>
+                        <!-- firstName variable missing -->
+                        <div class='span-container-value' id="first-name-value">
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="param-box">
                     <div class="param-container">
                         <div class='span-container' id="param-race"><span>Race:</span></div>
-                        <div class='span-container-value' id="race-value"><span><%= race %></span></div>
+                        <div class='span-container-value' id="race-value">
+                            <!-- race missing -->
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="param-box">
                     <div class="param-container">
                         <div class='span-container' id="param-language"><span>Language:</span></div>
-                        <div class='span-container-value' id="language-value"><span><%= language %></span></div>
+                        <!-- language missing -->
+                        <div class='span-container-value' id="language-value">
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="param-box">
                     <div class="param-container">
                         <div class='span-container' id="param-gender"><span>Gender:</span></div>
-                        <div class='span-container-value' id="gender-value"><span><%= gender %></span></div>
+                        <div class='span-container-value' id="gender-value">
+                            <!-- gender missing -->
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="param-box">
                     <div class="param-container" id="param-work">
                         <div class='span-container' id="param-work"><span>Work:</span></div>
-                        <div class='span-container-value' id="work-value"><span><%= work_department %></span></div>
+                        <div class='span-container-value' id="work-value">
+                            <!-- work department missing -->
+                            <span></span>
+                        </div>
                     </div>
                 </div>
                 <div class="param-box">
                     <div class="param-container" >
                         <div class='span-container' id="param-buzzword"><span>Buzzword:</span></div>
-                        <div class='span-container-value' id="buzzword-value"><span><%= buzzword %></span></div>
+                        <div class='span-container-value' id="buzzword-value">
+                            <!-- buzzword missing -->
+                            <span></span>
+                        </div>
                     </div>
                 </div>
             </div>
             </div>
         </div>
         <br>  
-           
+        <div>
+            <button class="btn" type="button">Clear All</button>
+        </div>
         <div class="operation-container">
-            
             <div class="log-container">
                 <div class="log-wrapper">
                     <h4>Operation Log</h4>
-                    <span><%= operation %></span>
+                    <!-- operation missing -->
+                    <span></span>
                 </div>
             </div>
             <div class="userlist-container">
                 <h4>List of saved users</h4>
                 <div class="list-container">
                     <ul class="saved-users">
-                      <% for(let i = 0; i < usersInfo.length; i++){%>
+                      <% for(let i = 0; i < users.length; i++){%>
                         <li class="li">
                             <span>#<%= [i + 1]%></span>
-                            <span><%= usersInfo[i].firstName %></span>
+                            <span><%= users[i] %></span>
                         </li>
                       <% } %>
                     </ul>
                   </div>
             </div> 
-        </div>
-        <div>
-            <button class="btn" type="button">Clear All</button>
         </div>
     </main>
     <script src="js/main.js"></script>

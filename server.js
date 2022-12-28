@@ -7,34 +7,6 @@ require('dotenv').config();
 const dbConnectionStr = process.env.DB_STRING;
 const dbName = 'fakePplDB';
 
-let userParams = {
-    avatar: null,
-    firstName: null,
-    race: null,
-    language: null,
-    gender: null,
-    work_department: null,
-    buzzword: null
-}
-
-let operation = '';
-
-const validateObj = (obj) =>  {
-    for (const property in obj) {
-        if (typeof obj[`${property}`] !== 'string') {
-            console.log('Invalid request, cannot add obj to DB')
-            return false 
-        }
-    }
-
-    if (Object.keys(obj).length !== 7) {
-        console.log('Invalid request, cannot add obj to DB')
-        return false
-    } else {
-        return true
-    }   
-}
-
 MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
     .then(client => {
         console.log(`Connected to ${dbName} Database`);
@@ -48,21 +20,16 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         app.use(express.json());
 
         // Routes
-        app.get('/',(req, res) => {
-            db.collection('fakePplCollection').find().toArray()
-            .then(data => {
-                res.render('index', {
-                    avatar: userParams.avatar,
-                    firstName: userParams.firstName,
-                    race: userParams.race,
-                    language: userParams.language,
-                    gender: userParams.gender,
-                    work_department: userParams.work_department,
-                    buzzword: userParams.buzzword,
-                    operation: operation,
-                    usersInfo: data,
-                })
-            })  
+        app.get('/', async (req, res) => {
+            res.locals.users = [];
+            const collection = await db.collection('fakePplCollection').find().toArray()
+            for (key in collection) {
+                res.locals.users.push(collection[key].firstName);
+            }
+            // console.log('Users: ', res.locals.users);
+            res.render('index.ejs', {
+                users: res.locals.users,
+            })
         })
         app.get('/getUserData',(req, res) => {
             for (const property in userParams) {
@@ -107,13 +74,6 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
                 .then(result => {
                 console.log('User Deleted')
                 operation = `Deleted ${userParams.firstName} from DB.`;
-                userParams.avatar = null;
-                userParams.firstName = null;
-                userParams.race = null;
-                userParams.language = null;
-                userParams.gender = null;
-                userParams.work_department = null;
-                userParams.buzzword = null;
                 res.json('User Deleted')
             })
             .catch(error => console.error(error))
@@ -127,6 +87,3 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
         })
     })
     .catch(console.error)
-
-
-
