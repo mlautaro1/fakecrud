@@ -18,7 +18,7 @@
     <main>
         <div class="generate-button">
             <button  class="button" id="generate-button" type="button">Generate New User</button>
-            <button class="button" type="button">Clear All</button>
+            <button class="button" type="button" id="clearAll">Clear All</button>
         </div>
         <div class="data-container">
             <div class="data-wrapper">
@@ -27,7 +27,7 @@
                 </div>
             <div class="db-buttons-container">
                 <button type="button"class="button" id="save-button">Save User to DB</button>
-                <button disabled type="button" class="button" id="delete-button">Delete User from DB</button>
+                <button type="button" class="button" id="delete-button">Delete User from DB</button>
             </div>
             <div class="params-container">
                 <div class="param-box">
@@ -94,12 +94,12 @@
                 <h4>List of saved users</h4>
                 <div class="list-container">
                     <ul class="saved-users">
-                      <% for(let i = 0; i < users.length; i++){%>
-                        <li class="li">
-                            <span>#<%= [i + 1]%></span>
-                            <span><%= users[i] %></span>
-                        </li>
-                      <% } %>
+                        <% for(let i=0; i < users.length; i++) {%>
+                            <li class="li">
+                                <span>#<%= (i + 1) %></span>
+                                <span><%= users[i].name %></span>
+                            </li>
+                        <% } %>
                     </ul>
                   </div>
             </div> 

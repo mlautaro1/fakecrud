@@ -2,7 +2,7 @@ const userBtn = document.querySelector('#generate-button ');
 const saveBtn = document.querySelector('#save-button');
 const deleteBtn = document.querySelector('#delete-button');
 const queryURL = 'https://api.mockaroo.com/api/b3aeff80?count=1&key=edbcd6a0';
-const clearBtn = document.querySelector('.btn');
+const clearBtn = document.querySelector('#clearAll');
 const liItems = document.querySelectorAll('.li');
 const img = document.querySelector('.myimg');
 const firstNameSpan = document.querySelector('.firstName');
@@ -11,34 +11,22 @@ const languageSpan = document.querySelector('.language');
 const genderSpan = document.querySelector('.gender');
 const workSpan = document.querySelector('.work');
 const buzzwordSpan = document.querySelector('.buzzword');
+const ul = document.querySelector('.saved-users');
 
 const getNewUser = async () => {
     let query = await fetch(queryURL);
     let data = await query.json()
     // obj format
-    return data
-}
-
-const sendUser = async () => {
-    let data = await getNewUser();
-    try {
-        let f = await fetch('/getNewUser', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({data})
-        })
-        const res = await f.json();
-        if (res.status) console.log(res.data);
-        img.src = res.data.avatar;
-        firstNameSpan.innerText = res.data.first_name;
-        raceSpan.innerText = res.data.race;
-        languageSpan.innerText = res.data.language;
-        genderSpan.innerText = res.data.gender;
-        workSpan.innerText = res.data.work_department;
-        buzzwordSpan.innerText = res.data.buzzword;
-    } catch (err) {
-        console.log(err);
-    }
+    console.log(data[0]);
+    let {avatar, buzzword, first_name, gender, id, language, race, work_department} = data[0];
+    img.src = avatar;
+    firstNameSpan.innerText = first_name;
+    raceSpan.innerText = race;
+    languageSpan.innerText = language;
+    genderSpan.innerText = gender;
+    workSpan.innerText = work_department;
+    buzzwordSpan.innerText = buzzword;
+    console.log('Generated new user ', first_name);
 }
 
 const saveUser = async () => {
@@ -54,7 +42,6 @@ const saveUser = async () => {
         work: workSpan.innerText,
         buzzword: buzzwordSpan.innerText,
     }
-    
     try {
         const f = await fetch('/addUserToDB', {
             method: 'post',
@@ -68,7 +55,7 @@ const saveUser = async () => {
             alert(res.message);
             setTimeout(() => {
                 location.reload();
-            }, 1000);
+            }, 500);
         }
     } catch (err) {
         console.log(err);
@@ -76,38 +63,32 @@ const saveUser = async () => {
 }
 
 const deleteUser = async () => {
-    let data = await fetch('/deleteUserData', {
-        method: 'delete',
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json()
+    if (!ul.innerHTML) {
+        alert('Nothing to delete');
+        return;
+    } else {
+        const f = await fetch('/deleteLastUser', {
+            method: 'delete',
+        })
+        const res = await f.json();
+        if (res.status == 'ok') {
+            console.log(res.message);
         }
-        if (!res.ok) {
-            throw new Error('Invalid request.')
-        }
-    })
-    .then((response) => {
-        location.reload()
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    }
 }
 
 const deleteData = async () => {
     liItems.forEach((el) => {
         el.innerHTML = '';
     })
-
     const f = await fetch('/deleteAllUsers', {
         method:'delete',
     })
     const res = await f.json();
-    if (res.ok) console.log(res);
+    if (res.status === 'Success') console.log(res.msg);
 }
 
-userBtn.addEventListener('click', sendUser);
+userBtn.addEventListener('click', getNewUser);
 saveBtn.addEventListener('click', saveUser);
 deleteBtn.addEventListener('click', deleteUser);
-// clearBtn.addEventListener('click', deleteData);
+clearBtn.addEventListener('click', deleteData);
