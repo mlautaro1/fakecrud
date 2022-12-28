@@ -26,11 +26,12 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
             for (key in collection) {
                 res.locals.users.push(collection[key].firstName);
             }
-            // console.log('Users: ', res.locals.users);
             res.render('index.ejs', {
+                firstName: '',
                 users: res.locals.users,
             })
         })
+
         app.get('/getUserData',(req, res) => {
             for (const property in userParams) {
                 if (userParams[property] === null) {
@@ -56,17 +57,12 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
                 res.status(400).json('Invalid OBJ.');
             }
         })
+
         app.put('/getNewUser', (req, res) => {
-            let data = req.body.data;
-            userParams.avatar = data['0'].avatar;
-            userParams.firstName = data['0'].first_name;
-            userParams.race = data['0'].race;
-            userParams.language = data['0'].language;
-            userParams.gender = data['0'].gender;
-            userParams.work_department = data['0'].work_department;
-            userParams.buzzword = data['0'].buzzword;
-            res.json('Success')
+            let data = req.body.data[0];
+            res.status(200).json({status: 'ok', data: data});
         })
+
         app.delete('/deleteUserData', (req, res) => {
             let isValid = validateObj(userParams);
             if (isValid) {
@@ -82,6 +78,13 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
                 res.status(400).json('Invalid request.');
             }
         })
+
+        app.delete('/deleteAllUsers', async (req, res) => {
+            const del = await collection.deleteMany({});
+            if (del) console.log('Successfully deleted users from database.');
+            res.status(200).json('Success');
+        })
+
         app.listen(process.env.PORT || PORT, () => {
             console.log(`Server running on port ${PORT}`)
         })

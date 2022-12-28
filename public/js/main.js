@@ -4,6 +4,13 @@ const deleteBtn = document.querySelector('#delete-button');
 const queryURL = 'https://api.mockaroo.com/api/b3aeff80?count=1&key=edbcd6a0';
 const clearBtn = document.querySelector('.btn');
 const liItems = document.querySelectorAll('.li');
+const img = document.querySelector('.myimg');
+const firstNameSpan = document.querySelector('.firstName');
+const raceSpan = document.querySelector('.race');
+const languageSpan = document.querySelector('.language');
+const genderSpan = document.querySelector('.gender');
+const workSpan = document.querySelector('.work');
+const buzzwordSpan = document.querySelector('.buzzword');
 
 const getNewUser = async () => {
     let query = await fetch(queryURL);
@@ -14,22 +21,25 @@ const getNewUser = async () => {
 
 const sendUser = async () => {
     let data = await getNewUser();
-    let f = await fetch('/getNewUser', {
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({data})
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-    })
-    .then(response => {
-        location.reload()
-    })
-    .catch(err => {
-        console.log(err)
-    })
+    try {
+        let f = await fetch('/getNewUser', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({data})
+        })
+        const res = await f.json();
+        if (res.status) console.log(res.data);
+        img.src = res.data.avatar;
+        firstNameSpan.innerText = res.data.first_name;
+        raceSpan.innerText = res.data.race;
+        languageSpan.innerText = res.data.language;
+        genderSpan.innerText = res.data.gender;
+        workSpan.innerText = res.data.work_department;
+        buzzwordSpan.innerText = res.data.buzzword;
+    } catch (err) {
+        console.log(err);
+    }
+     
 }
 
 const saveUser = async () => {
@@ -92,10 +102,16 @@ const deleteUser = async () => {
     })
 }
 
-const deleteData = () => {
+const deleteData = async () => {
     liItems.forEach((el) => {
         el.innerHTML = '';
     })
+
+    const f = await fetch('/deleteAllUsers', {
+        method:'delete',
+    })
+    const res = await f.json();
+    if (res.ok) console.log(res);
 }
 
 userBtn.addEventListener('click', sendUser);
