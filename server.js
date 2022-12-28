@@ -45,8 +45,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
             }
         })
 
-        app.post('/addUserToDB', async (req, res) => {
-            // let isValid = validateObj(req.body.response);
+        app.post('/addUserToDB', async (req, res) => {   
             let {firstName, race, language, gender, work, buzzword} = req.body.data;
             const doc = await collection.insertOne({
                 name: firstName,
