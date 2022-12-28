@@ -39,47 +39,40 @@ const sendUser = async () => {
     } catch (err) {
         console.log(err);
     }
-     
 }
 
 const saveUser = async () => {
-    // get user from sv
-    let data = await fetch('/getUserData', {
-        method: 'get',
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json()
-        }
-        if (!res.ok) {
-            throw new Error('Could not get user data')
-        }
-    })
-    .then( async (response) => {
-        // response = obj with user data
-        let f = await fetch('/addUserToDB', {
+    if (firstNameSpan.innerText == '') {
+        alert('Cannot save empty user, please generate a new one.');
+        return;
+    }
+    let data = {
+        firstName: firstNameSpan.innerText,
+        race: raceSpan.innerText,
+        language: languageSpan.innerText,
+        gender: genderSpan.innerText,
+        work: workSpan.innerText,
+        buzzword: buzzwordSpan.innerText,
+    }
+    
+    try {
+        const f = await fetch('/addUserToDB', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({response})
+            body: JSON.stringify({
+                data
+            })
         })
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-            if (!res.ok) {
-                throw new Error('Invalid request, cannot add obj to DB')
-            }
-        })
-        .then(response => {
-            location.reload()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
-    .catch(err => {
-        console.log(err)
-    })
+        const res = await f.json();
+        if (res.status === 'ok') {
+            alert(res.message);
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 const deleteUser = async () => {
@@ -117,4 +110,4 @@ const deleteData = async () => {
 userBtn.addEventListener('click', sendUser);
 saveBtn.addEventListener('click', saveUser);
 deleteBtn.addEventListener('click', deleteUser);
-clearBtn.addEventListener('click', deleteData);
+// clearBtn.addEventListener('click', deleteData);

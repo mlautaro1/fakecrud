@@ -16,19 +16,26 @@ h1, h4, p, span {
     align-items: center;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 header {
     margin-bottom: 2px;
 }
 
 main {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 100vh;
     background-color: #3A4750;
-    border: 2px solid #303841;
+    border: 4px solid #303841;
     position: relative;
+    margin: 10px;
 }
 
 .button {
@@ -36,13 +43,18 @@ main {
     width: auto;
     background-color: #EEEEEE;
     border: 2px solid #303841;
-    margin: 5px;
+    margin: 10px;
 }
 
 .button:hover {
     background-color: #F6C90E;
     font-weight: 600;
     transition: 0.5s;
+}
+
+.generate-button {
+    display: flex;
+
 }
 
 #generate-button {
@@ -215,16 +227,6 @@ main {
     margin-left: 5px;
     margin-right: 5px;
     color: #EEEEEE
-}
-
-.btn {
-    width: 100px;
-    height: 50px;
-    background-color: #EEEEEE;
-}
-
-.btn:hover {
-    background-color: #F6C90E;
 }
 
 /* colors

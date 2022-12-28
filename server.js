@@ -24,7 +24,7 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
             res.locals.users = [];
             const collection = await db.collection('fakePplCollection').find().toArray()
             for (key in collection) {
-                res.locals.users.push(collection[key].firstName);
+                res.locals.users.push(collection[key].name);
             }
             res.render('index.ejs', {
                 firstName: '',
@@ -44,18 +44,20 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
                 }
             }
         })
-        app.post('/addUserToDB', (req, res) => {
-            // validate what we add to db
-            let isValid = validateObj(req.body.response);
-            if (isValid) {
-                console.log(`Added ${req.body.response.firstName} to DB.`);
-                collection.insertOne(req.body.response);
-                operation = `Added ${req.body.response.firstName} to DB.`;
-                res.status(200).json(`Added ${req.body.response.firstName} to DB.`);
-            } else {
-                console.log('Invalid request, cannot add user to DB.');
-                res.status(400).json('Invalid OBJ.');
-            }
+
+        app.post('/addUserToDB', async (req, res) => {
+            // let isValid = validateObj(req.body.response);
+            let {firstName, race, language, gender, work, buzzword} = req.body.data;
+            const doc = await collection.insertOne({
+                name: firstName,
+                race: race,
+                language: language,
+                gender: gender,
+                work: work,
+                buzzword: buzzword,
+            })
+            if (doc.acknowledged) console.log('User ' + firstName + ' added to db');
+            res.status(200).json({status: 'ok', message: 'User ' + firstName + ' added to db'});
         })
 
         app.put('/getNewUser', (req, res) => {
