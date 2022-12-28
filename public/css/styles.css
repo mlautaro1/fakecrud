@@ -217,19 +217,15 @@ main {
     color: #EEEEEE
 }
 
- 
-/* .operation-log-container {
-    display: flex;
-    position: absolute;
-    top: 100px;
-    right: 300px;
+.btn {
+    width: 100px;
+    height: 50px;
     background-color: #EEEEEE;
-    border: 4px solid #303841;
-    width: 25%;
-    height: 300px;
 }
 
-*/
+.btn:hover {
+    background-color: #F6C90E;
+}
 
 /* colors
 https://colorhunt.co/palette/3038413a4750f6c90eeeeeee

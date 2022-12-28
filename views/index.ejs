@@ -71,14 +71,10 @@
             </div>
             </div>
         </div>
-        <br>
-        <!--
-            <div class="operation-log-container">
-
-        </div>
-        -->
-        
+        <br>  
+           
         <div class="operation-container">
+            
             <div class="log-container">
                 <div class="log-wrapper">
                     <h4>Operation Log</h4>
@@ -90,14 +86,17 @@
                 <div class="list-container">
                     <ul class="saved-users">
                       <% for(let i = 0; i < usersInfo.length; i++){%>
-                        <li>
+                        <li class="li">
                             <span>#<%= [i + 1]%></span>
                             <span><%= usersInfo[i].firstName %></span>
                         </li>
                       <% } %>
                     </ul>
                   </div>
-            </div>
+            </div> 
+        </div>
+        <div>
+            <button class="btn" type="button">Clear All</button>
         </div>
     </main>
     <script src="js/main.js"></script>

@@ -1,7 +1,9 @@
 const userBtn = document.querySelector('#generate-button ');
 const saveBtn = document.querySelector('#save-button');
 const deleteBtn = document.querySelector('#delete-button');
-const queryURL = 'https://api.mockaroo.com/api/b3aeff80?count=1&key=edbcd6a0' 
+const queryURL = 'https://api.mockaroo.com/api/b3aeff80?count=1&key=edbcd6a0';
+const clearBtn = document.querySelector('.btn');
+const liItems = document.querySelectorAll('.li');
 
 const getNewUser = async () => {
     let query = await fetch(queryURL);
@@ -90,6 +92,13 @@ const deleteUser = async () => {
     })
 }
 
+const deleteData = () => {
+    liItems.forEach((el) => {
+        el.innerHTML = '';
+    })
+}
+
 userBtn.addEventListener('click', sendUser);
 saveBtn.addEventListener('click', saveUser);
 deleteBtn.addEventListener('click', deleteUser);
+clearBtn.addEventListener('click', deleteData);
