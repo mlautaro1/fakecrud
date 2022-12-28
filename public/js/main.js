@@ -71,13 +71,18 @@ const deleteUser = async () => {
             method: 'delete',
         })
         const res = await f.json();
-        if (res.status == 'ok') {
+        if (res.status == 'success') {
             console.log(res.message);
+            location.reload();
         }
     }
 }
 
 const deleteData = async () => {
+    if (ul.innerHTML == '') {
+        console.log('No users to delete from database');
+        return;
+    }
     liItems.forEach((el) => {
         el.innerHTML = '';
     })

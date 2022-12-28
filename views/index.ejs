@@ -83,24 +83,10 @@
         </div>
         <br>  
         <div class="operation-container">
-            <div class="log-container">
-                <div class="log-wrapper">
-                    <h4>Operation Log</h4>
-                    <!-- operation missing -->
-                    <span></span>
-                </div>
-            </div>
             <div class="userlist-container">
                 <h4>List of saved users</h4>
                 <div class="list-container">
-                    <ul class="saved-users">
-                        <% for(let i=0; i < users.length; i++) {%>
-                            <li class="li">
-                                <span>#<%= (i + 1) %></span>
-                                <span><%= users[i].name %></span>
-                            </li>
-                        <% } %>
-                    </ul>
+                    <ul class="saved-users"><% for(let i=0; i < users.length; i++) {%><li class="li"><span>#<%= (i + 1) %></span><span> <%= users[i].name %></span></li><% } %></ul>
                   </div>
             </div> 
         </div>

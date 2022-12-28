@@ -53,6 +53,22 @@ MongoClient.connect(dbConnectionStr, { useUnifiedTopology: true })
             res.status(200).json({status: 'Success', msg: msg});
         })
 
+        app.delete('/deleteLastUser', async (req, res) => {
+            const savedUsers = await db.collection('fakePplCollection').find().toArray();
+            let last = (Object.keys(savedUsers).length - 1);
+            let lastUser = savedUsers[`${last}`];
+            let msg = 'Deleted ' + lastUser.name + ' from database';
+            try {
+                db.collection('fakePplCollection').deleteOne({
+                    name: lastUser.name
+                })
+                console.log(msg);
+                res.status(200).json({status: 'success', message: msg});
+            } catch (err) {
+                console.log(err);
+            }
+        })
+
         app.listen(process.env.PORT || PORT, () => {
             console.log(`Server running on port ${PORT}`)
         })
